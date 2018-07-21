@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(rootProject.file("keystore.properties")))
+
 android {
     compileSdkVersion 26
     buildToolsVersion '27.0.3'
@@ -14,6 +17,16 @@ android {
         // Enabling multidex support.
         multiDexEnabled true
     }
+
+    signingConfigs {
+        release {
+            storeFile file(keystoreProperties['releaseStoreFile'])
+            storePassword keystoreProperties['releaseStorePassword']
+            keyAlias keystoreProperties['releaseKeyAlias']
+            keyPassword keystoreProperties['releaseKeyPassword']
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false

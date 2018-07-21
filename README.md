@@ -1,4 +1,5 @@
-# Samourai Wallet
+# Fehu a Bitcoin wallet for android
+### Fehu is a fork of the popular [Samurai wallet](https://github.com/Samourai-Wallet/samourai-wallet-android)
 
 ### Features:
 
