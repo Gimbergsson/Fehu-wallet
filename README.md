@@ -1,3 +1,4 @@
+![Fehu image](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Runic_letter_fehu.svg/14px-Runic_letter_fehu.svg.png)
 # Fehu a Bitcoin wallet for android
 ### Fehu is a fork of the popular [Samurai wallet](https://github.com/Samourai-Wallet/samourai-wallet-android)
 
