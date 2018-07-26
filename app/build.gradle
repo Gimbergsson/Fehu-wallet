@@ -9,7 +9,7 @@ android {
     useLibrary 'org.apache.http.legacy'
     flavorDimensions "versionCode"
     defaultConfig {
-        applicationId 'com.samourai.wallet'
+        applicationId 'com.fehu.wallet'
         minSdkVersion 21
         targetSdkVersion 26
         versionCode 113
@@ -28,6 +28,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            versionNameSuffix "-" + getCurrentGitBranch()
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -54,20 +57,11 @@ android {
     productFlavors {
         production {
             minSdkVersion 21
-            applicationId 'com.samourai.wallet'
+            applicationId 'com.fehu.wallet'
             targetSdkVersion 26
             versionCode 113
             versionName "0.98.63"
-            resValue "string", "app_name", "Samourai"
-            resValue "string", "version_name", "0.98.63"
-        }
-        staging {
-            minSdkVersion 21
-            applicationId 'com.samourai.wallet.staging'
-            targetSdkVersion 26
-            versionCode 113
-            versionName "0.98.63"
-            resValue "string", "app_name", "Samourai Staging"
+            resValue "string", "app_name", "Fehu wallet"
             resValue "string", "version_name", "0.98.63"
         }
     }
@@ -83,7 +77,7 @@ dependencies {
     implementation 'org.thoughtcrime.ssl.pinning:AndroidPinning:1.0.0'
     implementation 'com.neovisionaries:nv-websocket-client:1.9'
     implementation 'com.baoyz.swipemenulistview:library:1.2.1'
-    implementation 'org.json:json:20140107'
+    //implementation 'org.json:json:20140107'
     implementation 'commons-io:commons-io:2.5'
     implementation 'commons-codec:commons-codec:1.4'
     implementation 'org.apache.commons:commons-lang3:3.3'
@@ -101,4 +95,19 @@ dependencies {
     implementation 'com.android.support:support-v4:26.1.0'
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.yanzhenjie.zbar:camera:1.0.0'
+}
+
+def getCurrentGitBranch() {
+    def gitBranch = "Unknown-branch"
+    try {
+        def workingDir = new File("${project.projectDir}")
+        def result = 'git rev-parse --abbrev-ref HEAD'.execute(null, workingDir)
+        result.waitFor()
+        if (result.exitValue() == 0) {
+            gitBranch = result.text.trim()
+        }
+    } catch (e) {
+        println(e)
+    }
+    return gitBranch
 }
