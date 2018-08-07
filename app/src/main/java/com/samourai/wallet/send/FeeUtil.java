@@ -21,7 +21,7 @@ public class FeeUtil  {
             "Samourai (bitcoind)",
     };
 
-    private static final int ESTIMATED_INPUT_LEN_P2PKH = 158;       // (148), compressed key (180 uncompressed key)
+    private static final int ESTIMATED_INPUT_LEN_P2PKH = 148;       // compressed key (180 uncompressed key)
     private static final int ESTIMATED_INPUT_LEN_P2SH_P2WPKH = 108; // p2sh, includes segwit discount (ex: 146)
     private static final int ESTIMATED_INPUT_LEN_P2WPKH = 85;       // bech32, p2wpkh
     private static final int ESTIMATED_OUTPUT_LEN = 33;
@@ -172,6 +172,23 @@ public class FeeUtil  {
         else    {
             return BigInteger.valueOf((long)fee);
         }
+    }
+
+    public Pair<Integer,Integer> getOutpointCount(List<MyTransactionOutPoint> outpoints) {
+
+        int p2sh_p2wpkh = 0;
+        int p2pkh = 0;
+
+        for(MyTransactionOutPoint out : outpoints)   {
+            if(Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), out.getAddress()).isP2SHAddress())    {
+                p2sh_p2wpkh++;
+            }
+            else   {
+                p2pkh++;
+            }
+        }
+
+        return Pair.of(p2pkh, p2sh_p2wpkh);
     }
 
     public Triple<Integer,Integer,Integer> getOutpointCount(Vector<MyTransactionOutPoint> outpoints) {
